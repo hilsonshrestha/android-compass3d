@@ -1,3 +1,3 @@
 #summary A screenshot of the app in action
 
-http://android-compass3d.googlecode.com/svn/trunk/compass3d/compass-icon.svg
+http://android-compass3d.googlecode.com/svn/trunk/compass3d/screenshot1.png
