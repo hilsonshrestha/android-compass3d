@@ -18,4 +18,4 @@ U.S. users may be surprised to find that the direction of the magnetic field is 
   * Vibrates when the handset is aligned with the magnetic field
   * Displays numerical deviation and inclination from the phone's axis, and strength
 
-See also: ScreenShot
+See also: [Screenshot]
