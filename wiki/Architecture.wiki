@@ -1,0 +1,24 @@
+#summary Architectural design
+
+= Model View Controller =
+
+The application is centered at a non-functional model of the compass, called the CompassModel. This model does have some (idempotent) operators to extract the data in different ways (computing the yaw and strength, for example), but otherwise it is docile.
+
+The main activity sets up three views:
+  * The OpenGL view
+  * A text view for showing coordinates
+  * A vibrator view, which vibrates when you align the phone to the field
+
+It also sets up a controller whose job is to periodically sample the magnetometer and update the model.
+
+= UI Thread =
+
+Because updates to the model notified the view listeners (using java.util.Observer), it was important that some of these ran in the UI thread (specifically the one that updated the text view). I found that both the SensorManager and an android.os.Timer generated periodic callbacks in this thread. (The android.os.Timer was needed for a synthetic, test field source).
+
+= OpenGL sink =
+
+The OpenGL view has its own desynchronized update rate; therefore it did not need to listen for changes to the model. Instead, I made sure that views accesses to the model was synchronized in some kind of coherent way.
+
+= View adapter =
+
+I'm not sure what the terminology is here, but the TextView is just a widget I chose not to subclass. Instead I created an 'view adapter' that listened to model events and then updated that view. (Does this have a better name?)
