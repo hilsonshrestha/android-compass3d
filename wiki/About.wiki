@@ -11,6 +11,22 @@ U.S. users may be surprised to find that the direction of the magnetic field is 
   * in your headphones
   * in your laptop speakers
 
+= How to use =
+
+Keep your device oriented so that you are looking directly into the plane of the display. (If you can see your reflection, that's a good sign).
+
+Now, raise your arm and move your phone around to see the needle change. Remember to keep the display 'flat' to your eye.
+
+You should be able to discern that the needle always points in the direction of the 3-dimensional magnetic field.
+
+== Use as a compass ==
+
+Place your phone flat on a table. The red tip will indicate magnetic north. If the red tip is fully obscured by the white side, then the magnetic field is pretty steep.
+
+The yaw reading will indicate the field's deflection from the phone's "y" axis (top-bottom axis). Pointing the phone east will result in a yaw of about -90&deg;, while west will deflect the needle to +90&deg;.
+
+Magnetic north is not the same as true north.
+
 = Features =
 
   * Live three-dimensional red-white needle (Red points to magnetic north)
