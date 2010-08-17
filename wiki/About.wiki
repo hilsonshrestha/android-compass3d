@@ -6,7 +6,7 @@
 
 That's it. 
 
-U.S. users may be surprised to find that the direction of the magnetic field is *into the ground* where they live. The strength of the Earth's natural magnetic field is about 20--60 &mu;T on the ground, and it is easily swamped by magnets you may find 
+U.S. users may be surprised to find that the direction of the magnetic field is *into the ground* where they live. The strength of the Earth's natural magnetic field is about 20--60 μT on the ground, and it is easily swamped by magnets you may find 
   * on your fridge
   * in your headphones
   * in your laptop speakers
@@ -23,7 +23,7 @@ You should be able to discern that the needle always points in the direction of 
 
 Place your phone flat on a table. The red tip will indicate magnetic north. If the red tip is fully obscured by the white side, then the magnetic field is pretty steep.
 
-The yaw reading will indicate the field's deflection from the phone's "y" axis (top-bottom axis). Pointing the phone east will result in a yaw of about -90&deg;, while west will deflect the needle to +90&deg;.
+The yaw reading will indicate the field's deflection from the phone's "y" axis (top-bottom axis). Pointing the phone east will result in a yaw of about -90°, while west will deflect the needle to +90°.
 
 Magnetic north is not the same as true north.
 
