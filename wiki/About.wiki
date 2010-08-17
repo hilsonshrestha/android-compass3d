@@ -1,0 +1,21 @@
+#summary What this app does
+
+= Introduction =
+
+*Compass 3D* draws a three-dimensional compass needle that indicates the current magnetic field direction.
+
+That's it. 
+
+U.S. users may be surprised to find that the direction of the magnetic field is *into the ground* where they live. The strength of the Earth's natural magnetic field is about 20--60 &mu;T on the ground, and it is easily swamped by magnets you may find 
+  * on your fridge
+  * in your headphones
+  * in your laptop speakers
+
+= Features =
+
+  * Live three-dimensional red-white needle (Red points to magnetic north)
+  * Background lightens as magnetic intensity increases
+  * Vibrates when the handset is aligned with the magnetic field
+  * Displays numerical deviation and inclination from the phone's axis, and strength
+
+See also: ScreenShot
