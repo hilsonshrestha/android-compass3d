@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>android-experiment-test</name>
+	<name>com.adaptive-enterprises.android.compass3d-test</name>
 	<comment></comment>
 	<projects>
-		<project>android-experiment</project>
+		<project>com.adaptive-enterprises.android.compass3d</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
