@@ -14,6 +14,7 @@ import com.adaptive_enterprises.android.compass3d.view.VibrateView;
 import com.adaptive_enterprises.android.compass3d.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -36,8 +37,6 @@ public class Compass3dActivity extends Activity {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "create");
         setContentView(R.layout.main);
-        
-        settings.setVibrateOnAlignment(true);
         
         compassTextAdapter = new CompassTextViewAdapter();
         compassTextAdapter.setTextView((TextView)findViewById(R.id.TextView01));
@@ -71,6 +70,8 @@ public class Compass3dActivity extends Activity {
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "resumed");
+        Compass3dPreferenceActivity.loadSettings(getApplicationContext(), settings);
+        Log.d(TAG, "vibrateOnAlignment = " + settings.getVibrateOnAlignment());
         vibrateLogic.reset();
         surfaceView.onResume();
     }
@@ -93,7 +94,8 @@ public class Compass3dActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.optionsPreferencesItem:
-            Log.i(TAG, "settings");
+            Log.i(TAG, "preferences");
+            startActivity(new Intent(this, Compass3dPreferenceActivity.class));
             return true;
         default:
             return super.onOptionsItemSelected(item);
