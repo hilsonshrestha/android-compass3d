@@ -21,9 +21,9 @@ You should be able to discern that the needle always points in the direction of 
 
 == Use as a compass ==
 
-Place your phone flat on a table. The red tip will indicate magnetic north. If the red tip is fully obscured by the white side, then the magnetic field is pretty steep.
+Place your phone flat on a table, display up. The red tip will indicate magnetic north. If the red tip is fully obscured by the white side, then the magnetic field is pretty steep where you are. It is also likely to be quite cold.
 
-The yaw reading will indicate the field's deflection from the phone's "y" axis (top-bottom axis). Pointing the phone east will result in a yaw of about -90°, while west will deflect the needle to +90°.
+The yaw reading indicates the field's deflection about the phone's "z" axis (as if you had driven a screwdriver into the display and twisted it (P.S. Don't do that)). Orienting a reclined phone's top towards the east will result in a yaw reading of about -90°, while west will deflect the needle to +90°.
 
 Magnetic north is not the same as true north.
 
