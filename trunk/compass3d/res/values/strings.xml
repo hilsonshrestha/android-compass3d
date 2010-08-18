@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <string name="hello">Hello World!</string>
+    <string name="label_Preferences">Preferences</string>
     <string name="app_name">Compass 3D</string>
     <string name="app_desc">Magnetic fields are cool</string>
-<string name="label_orientation">Orientation</string>
 <string name="no_sensors">No sensors</string>
 </resources>

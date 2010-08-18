@@ -16,6 +16,9 @@ import com.adaptive_enterprises.android.compass3d.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class Compass3dActivity extends Activity {
@@ -76,6 +79,24 @@ public class Compass3dActivity extends Activity {
         super.onPause();
         Log.i("Experiment", "paused");
         surfaceView.onPause();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.compass_menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.optionsPreferencesItem:
+            Log.i("Experiment", "settings");
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
     
 }
