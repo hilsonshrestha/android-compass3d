@@ -13,6 +13,7 @@ import android.util.Log;
  * OpenGL renderer that draws a cone with orientation based on a CompassModel.
  */
 public class CompassRenderer implements GLSurfaceView.Renderer {
+    private static final String TAG = "Compass3D";
     private CompassModel model;
     private Cone cone;
 
@@ -31,7 +32,7 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        Log.d("Experiment", "surface create");
+        Log.d(TAG, "surface create");
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
         gl.glClearColor(0.2f, 0.2f, 0.2f, 1f);
         gl.glEnable(GL10.GL_CULL_FACE);
@@ -47,7 +48,7 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int w, int h) {
-        Log.d("Experiment", "surface change");
+        Log.d(TAG, "surface change");
         gl.glViewport(0, 0, w, h);
         float aspect = (float)w / h;
         gl.glMatrixMode(GL10.GL_PROJECTION);

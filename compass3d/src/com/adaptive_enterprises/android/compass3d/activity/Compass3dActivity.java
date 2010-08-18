@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class Compass3dActivity extends Activity {
+    private static final String TAG = "Compass3D";
     private final CompassModel compass = new CompassModel();
     private final SettingsModel settings = new SettingsModel();
     private CompassController compassController;
@@ -33,7 +34,7 @@ public class Compass3dActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("Experiment", "create");
+        Log.i(TAG, "create");
         setContentView(R.layout.main);
         
         settings.setVibrateOnAlignment(true);
@@ -59,7 +60,7 @@ public class Compass3dActivity extends Activity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        Log.i("Experiment", "window focus = " + hasFocus);
+        Log.i(TAG, "window focus = " + hasFocus);
         if (hasFocus)
             compassController.start();
         else
@@ -69,7 +70,7 @@ public class Compass3dActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("Experiment", "resumed");
+        Log.i(TAG, "resumed");
         vibrateLogic.reset();
         surfaceView.onResume();
     }
@@ -77,7 +78,7 @@ public class Compass3dActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("Experiment", "paused");
+        Log.i(TAG, "paused");
         surfaceView.onPause();
     }
     
@@ -92,7 +93,7 @@ public class Compass3dActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.optionsPreferencesItem:
-            Log.i("Experiment", "settings");
+            Log.i(TAG, "settings");
             return true;
         default:
             return super.onOptionsItemSelected(item);

@@ -13,6 +13,7 @@ import android.util.Log;
  * Receives updates from a hardware compass and updates a CompassModel.
  */
 public class SensorCompassController implements CompassController {
+    private static final String TAG = "Compass3D";
     private SensorManager sensorManager;
     private Sensor magneticSensor;
     private SensorEventListener sensorEventListener;
@@ -44,12 +45,12 @@ public class SensorCompassController implements CompassController {
         sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         if (magneticSensor != null) {
-            Log.d("Experiment", "sensor.name: " + magneticSensor.getName());
-            Log.d("Experiment", "sensor.vendor: " + magneticSensor.getVendor());
-            Log.d("Experiment", "sensor.version: " + magneticSensor.getVersion());
-            Log.d("Experiment", "sensor.power: " + magneticSensor.getPower());
-            Log.d("Experiment", "sensor.maximumRange: " + magneticSensor.getMaximumRange());
-            Log.d("Experiment", "sensor.resolution: " + magneticSensor.getResolution());
+            Log.d(TAG, "sensor.name: " + magneticSensor.getName());
+            Log.d(TAG, "sensor.vendor: " + magneticSensor.getVendor());
+            Log.d(TAG, "sensor.version: " + magneticSensor.getVersion());
+            Log.d(TAG, "sensor.power: " + magneticSensor.getPower());
+            Log.d(TAG, "sensor.maximumRange: " + magneticSensor.getMaximumRange());
+            Log.d(TAG, "sensor.resolution: " + magneticSensor.getResolution());
         }
     }
     
@@ -59,9 +60,9 @@ public class SensorCompassController implements CompassController {
                     sensorEventListener, magneticSensor,
                     sensorDelay);
             if (registered) {
-                Log.d("Experiment", "compass controller started");
+                Log.d(TAG, "compass controller started");
             } else {
-                Log.w("Experiment", "could not register listener");
+                Log.w(TAG, "could not register listener");
             }
         }
     }
@@ -69,7 +70,7 @@ public class SensorCompassController implements CompassController {
     public void stop() {
         if (registered) {
             sensorManager.unregisterListener(sensorEventListener, magneticSensor);
-            Log.d("Experiment", "compass controller stopped");
+            Log.d(TAG, "compass controller stopped");
             registered = false;
         }
     }
