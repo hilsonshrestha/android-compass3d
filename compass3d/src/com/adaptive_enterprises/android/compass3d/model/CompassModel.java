@@ -1,4 +1,4 @@
-package com.adaptive_enterprises.android.compass3d;
+package com.adaptive_enterprises.android.compass3d.model;
 
 import java.util.Arrays;
 import java.util.Observable;
