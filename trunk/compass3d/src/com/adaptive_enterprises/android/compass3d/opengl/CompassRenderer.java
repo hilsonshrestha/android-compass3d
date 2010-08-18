@@ -1,7 +1,9 @@
-package com.adaptive_enterprises.android.compass3d;
+package com.adaptive_enterprises.android.compass3d.opengl;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
@@ -10,7 +12,7 @@ import android.util.Log;
 /**
  * OpenGL renderer that draws a cone with orientation based on a CompassModel.
  */
-class CompassRenderer implements GLSurfaceView.Renderer {
+public class CompassRenderer implements GLSurfaceView.Renderer {
     private CompassModel model;
     private Cone cone;
 

@@ -1,4 +1,6 @@
-package com.adaptive_enterprises.android.compass3d;
+package com.adaptive_enterprises.android.compass3d.controller;
+
+import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 
 import android.content.Context;
 import android.hardware.Sensor;

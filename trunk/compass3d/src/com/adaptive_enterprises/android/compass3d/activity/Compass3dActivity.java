@@ -1,7 +1,15 @@
-package com.adaptive_enterprises.android.compass3d;
+package com.adaptive_enterprises.android.compass3d.activity;
 
 
+import com.adaptive_enterprises.android.compass3d.R.id;
+import com.adaptive_enterprises.android.compass3d.R.layout;
+import com.adaptive_enterprises.android.compass3d.controller.CompassController;
+import com.adaptive_enterprises.android.compass3d.controller.SensorCompassController;
+import com.adaptive_enterprises.android.compass3d.model.CompassModel;
+import com.adaptive_enterprises.android.compass3d.opengl.CompassRenderer;
 import com.adaptive_enterprises.android.compass3d.view.CompassSurfaceView;
+import com.adaptive_enterprises.android.compass3d.view.CompassTextViewAdapter;
+import com.adaptive_enterprises.android.compass3d.view.VibrateView;
 import com.adaptive_enterprises.android.compass3d.R;
 
 import android.app.Activity;
