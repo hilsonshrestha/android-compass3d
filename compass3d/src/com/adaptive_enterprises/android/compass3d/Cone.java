@@ -73,6 +73,7 @@ public class Cone {
     public void draw(GL10 gl) {
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
         gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
         gl.glDrawElements(GL10.GL_TRIANGLE_FAN, segments + 2, GL10.GL_UNSIGNED_BYTE, 
                 coneIndexBuffer);
@@ -80,6 +81,7 @@ public class Cone {
         if (drawBase)
             gl.glDrawElements(GL10.GL_TRIANGLE_FAN, segments, GL10.GL_UNSIGNED_BYTE, 
                     baseIndexBuffer);
+        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
     }
     
     static ByteBuffer asBuffer(byte[] bytes) {
