@@ -1,8 +1,8 @@
-package com.adaptive_enterprises.experiment;
+package com.adaptive_enterprises.android.compass3d.model;
 
 import org.junit.Test;
 
-import com.adaptive_enterprises.android.compass3d.CompassModel;
+import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 
 import static org.junit.Assert.*;
 
