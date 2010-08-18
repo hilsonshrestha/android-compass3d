@@ -1,11 +1,12 @@
 package com.adaptive_enterprises.android.compass3d.activity;
 
 
-import com.adaptive_enterprises.android.compass3d.R.id;
-import com.adaptive_enterprises.android.compass3d.R.layout;
 import com.adaptive_enterprises.android.compass3d.controller.CompassController;
 import com.adaptive_enterprises.android.compass3d.controller.SensorCompassController;
+import com.adaptive_enterprises.android.compass3d.logic.VibrateLogic;
+import com.adaptive_enterprises.android.compass3d.logic.VibrateLogicImpl;
 import com.adaptive_enterprises.android.compass3d.model.CompassModel;
+import com.adaptive_enterprises.android.compass3d.model.SettingsModel;
 import com.adaptive_enterprises.android.compass3d.opengl.CompassRenderer;
 import com.adaptive_enterprises.android.compass3d.view.CompassSurfaceView;
 import com.adaptive_enterprises.android.compass3d.view.CompassTextViewAdapter;
@@ -18,10 +19,12 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class Compass3dActivity extends Activity {
-    private final CompassModel model = new CompassModel();
+    private final CompassModel compass = new CompassModel();
+    private final SettingsModel settings = new SettingsModel();
     private CompassController compassController;
     private CompassTextViewAdapter compassTextAdapter;
     private CompassSurfaceView surfaceView;
+    private VibrateLogic vibrateLogic;
     
     /** Called when the activity is first created. */
     @Override
@@ -30,19 +33,24 @@ public class Compass3dActivity extends Activity {
         Log.i("Experiment", "create");
         setContentView(R.layout.main);
         
+        settings.setVibrateOnAlignment(true);
+        
         compassTextAdapter = new CompassTextViewAdapter();
         compassTextAdapter.setTextView((TextView)findViewById(R.id.TextView01));
-        compassTextAdapter.setModel(model);
+        compassTextAdapter.setCompass(compass);
 
         surfaceView = (CompassSurfaceView)findViewById(R.id.SurfaceView01);
-        surfaceView.setRenderer(new CompassRenderer().setModel(model));
+        surfaceView.setRenderer(new CompassRenderer().setModel(compass));
 
         compassController = new SensorCompassController(getApplicationContext());
         //compassController = new FakeCompassController();
-        compassController.setModel(model);
+        compassController.setCompass(compass);
+        
+        vibrateLogic = new VibrateLogicImpl().setSettings(settings);
         
         VibrateView vibrateView = new VibrateView(getApplicationContext());
-        vibrateView.setModel(model);
+        vibrateView.setModel(compass);
+        vibrateView.setVibrateLogic(vibrateLogic);
     }
     
     @Override
@@ -59,6 +67,7 @@ public class Compass3dActivity extends Activity {
     protected void onResume() {
         super.onResume();
         Log.i("Experiment", "resumed");
+        vibrateLogic.reset();
         surfaceView.onResume();
     }
     

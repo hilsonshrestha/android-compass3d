@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.adaptive_enterprises.android.compass3d.R;
-import com.adaptive_enterprises.android.compass3d.R.string;
 import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 
 import android.widget.TextView;
@@ -13,15 +12,15 @@ import android.widget.TextView;
  * Observes a compass model and updates a text view
  */
 public class CompassTextViewAdapter implements Observer {
-    private CompassModel model;
+    private CompassModel compass;
     private TextView textView;
     private boolean diagnostic;
     
-    public void setModel(CompassModel model) {
-        if (this.model != null)
-            this.model.deleteObserver(this);
-        this.model = model;
-        model.addObserver(this);
+    public void setCompass(CompassModel compass) {
+        if (this.compass != null)
+            this.compass.deleteObserver(this);
+        this.compass = compass;
+        compass.addObserver(this);
     }
     
     public void setTextView(TextView textView) {
@@ -35,12 +34,12 @@ public class CompassTextViewAdapter implements Observer {
             float yaw, pitch;
             float strength;
             boolean available;
-            synchronized (model) {
-                available = model.getAccuracy() > 0;
-                orientation = available ? model.getOrientation() : null;
-                yaw = available ? (float)model.getYaw() : 0;
-                pitch = available ? (float)model.getPitch() : 0;
-                strength = available ? (float)model.getStrength() : 0;
+            synchronized (compass) {
+                available = compass.getAccuracy() > 0;
+                orientation = available ? compass.getOrientation() : null;
+                yaw = available ? (float)compass.getYaw() : 0;
+                pitch = available ? (float)compass.getPitch() : 0;
+                strength = available ? (float)compass.getStrength() : 0;
             }
             if (available) {
                 CharSequence s;

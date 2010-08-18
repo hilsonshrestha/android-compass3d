@@ -20,17 +20,17 @@ public class SensorCompassController implements CompassController {
     private int sensorDelay = SensorManager.SENSOR_DELAY_UI;
 
 
-    public void setModel(final CompassModel model) {
+    public void setCompass(final CompassModel compass) {
         boolean wasRegistered = registered;
         stop();
-        sensorEventListener = model == null ? null : new SensorEventListener() {
+        sensorEventListener = compass == null ? null : new SensorEventListener() {
             public void onSensorChanged(SensorEvent sensorevent) {
-                synchronized (model) {
-                    model.setOrientation(sensorevent.values);
-                    model.setAccuracy(sensorevent.accuracy);
-                    model.setTimestamp(sensorevent.timestamp);
+                synchronized (compass) {
+                    compass.setOrientation(sensorevent.values);
+                    compass.setAccuracy(sensorevent.accuracy);
+                    compass.setTimestamp(sensorevent.timestamp);
                 }
-                model.notifyObservers();
+                compass.notifyObservers();
             }
             public void onAccuracyChanged(Sensor sensor, int newAccuracy) {
                 // ignore;

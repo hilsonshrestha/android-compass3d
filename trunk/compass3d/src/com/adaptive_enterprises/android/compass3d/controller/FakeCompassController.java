@@ -28,12 +28,12 @@ import android.os.CountDownTimer;
  * The process is restarted whenever the application loses focus.
  */
 public class FakeCompassController implements CompassController {
-    private CompassModel model;
+    private CompassModel compass;
     private long startTime;
     private CountDownTimer timer;
     
-    public void setModel(CompassModel model) {
-        this.model = model;
+    public void setCompass(CompassModel compass) {
+        this.compass = compass;
     }
     
     void step() {
@@ -64,10 +64,10 @@ public class FakeCompassController implements CompassController {
             z = r * s;
         }
         
-        model.setAccuracy(3);
-        model.setTimestamp(time);
-        model.setOrientation(new float[] {(float)x, (float)y, (float)z});
-        model.notifyObservers();
+        compass.setAccuracy(3);
+        compass.setTimestamp(time);
+        compass.setOrientation(new float[] {(float)x, (float)y, (float)z});
+        compass.notifyObservers();
     }
     
     public void start() {
