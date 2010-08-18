@@ -1,7 +1,9 @@
-package com.adaptive_enterprises.android.compass3d;
+package com.adaptive_enterprises.android.compass3d.view;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 
 import android.content.Context;
 import android.hardware.SensorManager;

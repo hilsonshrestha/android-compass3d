@@ -1,4 +1,4 @@
-package com.adaptive_enterprises.android.compass3d;
+package com.adaptive_enterprises.android.compass3d.opengl;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
