@@ -3,5 +3,7 @@
     <string name="label_Preferences">Preferences</string>
     <string name="app_name">Compass 3D</string>
     <string name="app_desc">Magnetic fields are cool</string>
-<string name="no_sensors">No sensors</string>
+    <string name="no_sensors">No sensors</string>
+    <string name="pref_vibrateOnAlignment">Vibrate when aligned</string>
+    <string name="pref_vibrateOnAlignment_summary">Activates the vibrator when the needle has neither yaw nor pitch.</string>
 </resources>
