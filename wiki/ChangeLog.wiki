@@ -5,6 +5,6 @@
 1.2 (unreleased)
   * Preferences screen
 1.1
-  * Fixed [../issues/detail?id=1 issue 1]: needle not visible
+  * Fixed [http://code.google.com/p/android-compass3d/issues/detail?id=1 issue 1]: needle not visible
 1.0
   * Initial release
