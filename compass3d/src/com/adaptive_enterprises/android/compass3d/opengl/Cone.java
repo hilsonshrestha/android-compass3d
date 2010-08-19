@@ -7,80 +7,81 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 public class Cone {
-    double height = 1;
-    double radius = 1;
-    int segments = 4;
-    FloatBuffer vertexBuffer;
-    ByteBuffer coneIndexBuffer;
-    FloatBuffer normalBuffer;
-    ByteBuffer baseIndexBuffer;
-    private boolean drawBase;
+    private double mHeight = 1;
+    private double mRadius = 1;
+    private int mSegments = 4;
+    private FloatBuffer mVertexBuffer;
+    private ByteBuffer mConeIndexBuffer;
+    private FloatBuffer mNormalBuffer;
+    private ByteBuffer mBaseIndexBuffer;
+    private boolean mDrawBase;
+    private boolean mGeometryValid;
     
-    public Cone() {
-        calculateGeometry();
-    }
-
     public void setHeight(double height) {
-        this.height = height;
-        calculateGeometry();
+        mHeight = height;
+        mGeometryValid = false;
     }
     
     public void setRadius(double radius) {
-        this.radius = radius;
-        calculateGeometry();
+        mRadius = radius;
+        mGeometryValid = false;
     }
     
     public void setSegments(int segments) {
-        this.segments = segments;
-        calculateGeometry();
+        mSegments = segments;
+        mGeometryValid = false;
     }
     
     public void drawBase(boolean enable) {
-        drawBase = enable;
+        mDrawBase = enable;
     }
     
-    void calculateGeometry() {
-        assert segments < 255;
+    private void calculateGeometry() {
+        if (mGeometryValid) return;
 
-        float[] verticies = new float[3 * (segments + 1)];
-        byte[] coneIndicies = new byte[segments + 2];
-        byte[] baseIndicies = new byte[segments];
+        assert mSegments < 255;
+
+        float[] verticies = new float[3 * (mSegments + 1)];
+        byte[] coneIndicies = new byte[mSegments + 2];
+        byte[] baseIndicies = new byte[mSegments];
 
         // Nose of the cone
         verticies[0] =  0; 
-        verticies[1] = (float)height; 
+        verticies[1] = (float)mHeight; 
         verticies[2] =  0;
         
         coneIndicies[0] = 0;
-        double perAngle = 2 * Math.PI / segments;
-        for (int i = 0; i < segments; i++) {
+        double perAngle = 2 * Math.PI / mSegments;
+        for (int i = 0; i < mSegments; i++) {
             double angle = i * perAngle;
             int offset = 3 * i + 3;
-            verticies[offset + 0] = (float)(Math.cos(angle) * radius);
+            verticies[offset + 0] = (float)(Math.cos(angle) * mRadius);
             verticies[offset + 1] = 0;
-            verticies[offset + 2] = (float)(Math.sin(angle) * radius);
+            verticies[offset + 2] = (float)(Math.sin(angle) * mRadius);
             coneIndicies[i + 1] = (byte)(i + 1);
             baseIndicies[i] = (byte)(i + 1);
         }
-        coneIndicies[segments + 1] = 1;
+        coneIndicies[mSegments + 1] = 1;
         
-        vertexBuffer = asBuffer(verticies);
-        normalBuffer = vertexBuffer;  // turns out to be the same
-        coneIndexBuffer = asBuffer(coneIndicies);
-        baseIndexBuffer = asBuffer(baseIndicies);
+        mVertexBuffer = asBuffer(verticies);
+        mNormalBuffer = mVertexBuffer;  // turns out to be the same
+        mConeIndexBuffer = asBuffer(coneIndicies);
+        mBaseIndexBuffer = asBuffer(baseIndicies);
+        mGeometryValid = true;
     }
     
     public void draw(GL10 gl) {
+        calculateGeometry();
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-        gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
+        gl.glNormalPointer(GL10.GL_FLOAT, 0, mNormalBuffer);
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-        gl.glDrawElements(GL10.GL_TRIANGLE_FAN, segments + 2, GL10.GL_UNSIGNED_BYTE, 
-                coneIndexBuffer);
+        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, mVertexBuffer);
+        gl.glDrawElements(GL10.GL_TRIANGLE_FAN, mSegments + 2, GL10.GL_UNSIGNED_BYTE, 
+                mConeIndexBuffer);
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
-        if (drawBase)
-            gl.glDrawElements(GL10.GL_TRIANGLE_FAN, segments, GL10.GL_UNSIGNED_BYTE, 
-                    baseIndexBuffer);
+        if (mDrawBase)
+            gl.glDrawElements(GL10.GL_TRIANGLE_FAN, mSegments, GL10.GL_UNSIGNED_BYTE, 
+                    mBaseIndexBuffer);
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
     }
     

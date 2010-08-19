@@ -12,50 +12,41 @@ import android.widget.TextView;
  * Observes a compass model and updates a text view
  */
 public class CompassTextViewAdapter implements Observer {
-    private CompassModel compass;
-    private TextView textView;
-    private boolean diagnostic;
+    private CompassModel mCompass;
+    private TextView mTextView;
     
     public void setCompass(CompassModel compass) {
-        if (this.compass != null)
-            this.compass.deleteObserver(this);
-        this.compass = compass;
+        if (mCompass != null) {
+            mCompass.deleteObserver(this);
+        }
+        mCompass = compass;
         compass.addObserver(this);
     }
     
     public void setTextView(TextView textView) {
-        this.textView = textView;
+        mTextView = textView;
     }
 
     @Override
     public void update(Observable observable, Object obj) {
-        if (textView != null) {
-            float[] orientation;
+        if (mTextView != null) {
             float yaw, pitch;
             float strength;
             boolean available;
-            synchronized (compass) {
-                available = compass.getAccuracy() > 0;
-                orientation = available ? compass.getOrientation() : null;
-                yaw = available ? (float)compass.getYaw() : 0;
-                pitch = available ? (float)compass.getPitch() : 0;
-                strength = available ? (float)compass.getStrength() : 0;
+            synchronized (mCompass) {
+                available = mCompass.getAccuracy() > 0;
+                yaw = available ? (float)mCompass.getYaw() : 0;
+                pitch = available ? (float)mCompass.getPitch() : 0;
+                strength = available ? (float)mCompass.getStrength() : 0;
             }
             if (available) {
                 CharSequence s;
-                if (diagnostic) {
-                    s = String.format(
-                        "%3.0f|%+4.0fp%+4.0fy[%+5.1fx%+5.1fy%+5.1fz]",
-                        strength, pitch, yaw,
-                        orientation[0], orientation[1],  orientation[2]);
-                } else {
-                    s = String.format(
-                        "%4.0f\u00b0yaw %+4.0f\u00b0pitch %5.1f \u03bcT",
-                        yaw, pitch, strength);
-                }
-                textView.setText(s);
+                s = String.format(
+                    "%4.0f\u00b0yaw %+4.0f\u00b0pitch %5.1f \u03bcT",
+                    yaw, pitch, strength);
+                mTextView.setText(s);
             } else {
-                textView.setText(R.string.no_sensors);
+                mTextView.setText(R.string.no_sensors);
             }
         }
     }

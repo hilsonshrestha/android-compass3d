@@ -14,17 +14,16 @@ import android.util.Log;
  */
 public class SensorCompassController implements CompassController {
     private static final String TAG = "Compass3D";
-    private SensorManager sensorManager;
-    private Sensor magneticSensor;
-    private SensorEventListener sensorEventListener;
-    private boolean registered;
-    private int sensorDelay = SensorManager.SENSOR_DELAY_UI;
-
+    private SensorManager mSensorManager;
+    private Sensor mMagneticSensor;
+    private SensorEventListener mSensorEventListener;
+    private boolean mRegistered;
+    private int mSensorDelay = SensorManager.SENSOR_DELAY_UI;
 
     public void setCompass(final CompassModel compass) {
-        boolean wasRegistered = registered;
+        boolean wasRegistered = mRegistered;
         stop();
-        sensorEventListener = compass == null ? null : new SensorEventListener() {
+        mSensorEventListener = compass == null ? null : new SensorEventListener() {
             public void onSensorChanged(SensorEvent sensorevent) {
                 synchronized (compass) {
                     compass.setOrientation(sensorevent.values);
@@ -42,24 +41,24 @@ public class SensorCompassController implements CompassController {
     }
 
     public SensorCompassController(Context context) {
-        sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
-        magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        if (magneticSensor != null) {
-            Log.d(TAG, "sensor.name: " + magneticSensor.getName());
-            Log.d(TAG, "sensor.vendor: " + magneticSensor.getVendor());
-            Log.d(TAG, "sensor.version: " + magneticSensor.getVersion());
-            Log.d(TAG, "sensor.power: " + magneticSensor.getPower());
-            Log.d(TAG, "sensor.maximumRange: " + magneticSensor.getMaximumRange());
-            Log.d(TAG, "sensor.resolution: " + magneticSensor.getResolution());
+        mSensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
+        mMagneticSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        if (mMagneticSensor != null) {
+            Log.d(TAG, "sensor.name: " + mMagneticSensor.getName());
+            Log.d(TAG, "sensor.vendor: " + mMagneticSensor.getVendor());
+            Log.d(TAG, "sensor.version: " + mMagneticSensor.getVersion());
+            Log.d(TAG, "sensor.power: " + mMagneticSensor.getPower());
+            Log.d(TAG, "sensor.maximumRange: " + mMagneticSensor.getMaximumRange());
+            Log.d(TAG, "sensor.resolution: " + mMagneticSensor.getResolution());
         }
     }
     
     public void start() {
-        if (!registered && magneticSensor != null) {
-            registered = sensorManager.registerListener(
-                    sensorEventListener, magneticSensor,
-                    sensorDelay);
-            if (registered) {
+        if (!mRegistered && mMagneticSensor != null) {
+            mRegistered = mSensorManager.registerListener(
+                    mSensorEventListener, mMagneticSensor,
+                    mSensorDelay);
+            if (mRegistered) {
                 Log.d(TAG, "compass controller started");
             } else {
                 Log.w(TAG, "could not register listener");
@@ -68,10 +67,10 @@ public class SensorCompassController implements CompassController {
     }
     
     public void stop() {
-        if (registered) {
-            sensorManager.unregisterListener(sensorEventListener, magneticSensor);
+        if (mRegistered) {
+            mSensorManager.unregisterListener(mSensorEventListener, mMagneticSensor);
             Log.d(TAG, "compass controller stopped");
-            registered = false;
+            mRegistered = false;
         }
     }
 }
