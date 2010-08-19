@@ -2,6 +2,7 @@ package com.adaptive_enterprises.android.compass3d.activity;
 
 
 import com.adaptive_enterprises.android.compass3d.controller.CompassController;
+import com.adaptive_enterprises.android.compass3d.controller.FakeCompassController;
 import com.adaptive_enterprises.android.compass3d.controller.SensorCompassController;
 import com.adaptive_enterprises.android.compass3d.logic.VibrateLogic;
 import com.adaptive_enterprises.android.compass3d.logic.VibrateLogicImpl;
@@ -24,12 +25,12 @@ import android.widget.TextView;
 
 public class Compass3dActivity extends Activity {
     private static final String TAG = "Compass3D";
-    private final CompassModel compass = new CompassModel();
-    private final SettingsModel settings = new SettingsModel();
-    private CompassController compassController;
-    private CompassTextViewAdapter compassTextAdapter;
-    private CompassSurfaceView surfaceView;
-    private VibrateLogic vibrateLogic;
+    private final CompassModel mCompass = new CompassModel();
+    private final SettingsModel mSettings = new SettingsModel();
+    private CompassController mCompassController;
+    private CompassTextViewAdapter mCompassTextAdapter;
+    private CompassSurfaceView mSurfaceView;
+    private VibrateLogic mVibrateLogic;
     
     /** Called when the activity is first created. */
     @Override
@@ -38,49 +39,50 @@ public class Compass3dActivity extends Activity {
         Log.i(TAG, "create");
         setContentView(R.layout.main);
         
-        compassTextAdapter = new CompassTextViewAdapter();
-        compassTextAdapter.setTextView((TextView)findViewById(R.id.TextView01));
-        compassTextAdapter.setCompass(compass);
+        mCompassTextAdapter = new CompassTextViewAdapter();
+        mCompassTextAdapter.setTextView((TextView)findViewById(R.id.TextView01));
+        mCompassTextAdapter.setCompass(mCompass);
 
-        surfaceView = (CompassSurfaceView)findViewById(R.id.SurfaceView01);
-        surfaceView.setRenderer(new CompassRenderer().setModel(compass));
+        mSurfaceView = (CompassSurfaceView)findViewById(R.id.SurfaceView01);
+        mSurfaceView.setRenderer(new CompassRenderer().setModel(mCompass));
 
-        compassController = new SensorCompassController(getApplicationContext());
-        //compassController = new FakeCompassController();
-        compassController.setCompass(compass);
+        mCompassController = new SensorCompassController(getApplicationContext());
+        //mCompassController = new FakeCompassController();
+        mCompassController.setCompass(mCompass);
         
-        vibrateLogic = new VibrateLogicImpl().setSettings(settings);
+        mVibrateLogic = new VibrateLogicImpl().setSettings(mSettings);
         
         VibrateView vibrateView = new VibrateView(getApplicationContext());
-        vibrateView.setModel(compass);
-        vibrateView.setVibrateLogic(vibrateLogic);
+        vibrateView.setModel(mCompass);
+        vibrateView.setVibrateLogic(mVibrateLogic);
     }
     
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         Log.i(TAG, "window focus = " + hasFocus);
-        if (hasFocus)
-            compassController.start();
-        else
-            compassController.stop();
+        if (hasFocus) {
+            mCompassController.start();
+        } else {
+            mCompassController.stop();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "resumed");
-        Compass3dPreferenceActivity.loadSettings(getApplicationContext(), settings);
-        Log.d(TAG, "vibrateOnAlignment = " + settings.getVibrateOnAlignment());
-        vibrateLogic.reset();
-        surfaceView.onResume();
+        Compass3dPreferenceActivity.loadSettings(getApplicationContext(), mSettings);
+        Log.d(TAG, "vibrateOnAlignment = " + mSettings.getVibrateOnAlignment());
+        mVibrateLogic.reset();
+        mSurfaceView.onResume();
     }
     
     @Override
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "paused");
-        surfaceView.onPause();
+        mSurfaceView.onPause();
     }
     
     @Override

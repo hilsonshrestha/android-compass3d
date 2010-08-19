@@ -14,18 +14,18 @@ import android.util.Log;
  */
 public class CompassRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "Compass3D";
-    private CompassModel model;
-    private Cone cone;
+    private CompassModel mModel;
+    private Cone mCone;
 
     public CompassRenderer() {
-        cone = new Cone();
-        cone.setSegments(32);
-        cone.setHeight(2);
-        cone.setRadius(0.5);
+        mCone = new Cone();
+        mCone.setSegments(32);
+        mCone.setHeight(2);
+        mCone.setRadius(0.5);
     }
     
     public CompassRenderer setModel(CompassModel model) {
-        this.model = model;
+        mModel = model;
         // Don't add a listener because we use continuous render mode
         return this;
     }
@@ -61,22 +61,24 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        if (model == null)
+        if (mModel == null) {
             return;
+        }
 
         float strength;
         double yaw, pitch;
         int accuracy;
-        synchronized (model) {
-            accuracy = model.getAccuracy();
-            strength = (float)model.getStrength();
-            yaw = model.getYaw();
-            pitch = model.getPitch();
+        synchronized (mModel) {
+            accuracy = mModel.getAccuracy();
+            strength = (float)mModel.getStrength();
+            yaw = mModel.getYaw();
+            pitch = mModel.getPitch();
         }
 
         // Don't draw the needle if the value is unreliable
-        if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE)
+        if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
             return;
+        }
         
         // If the sensor is inaccurate, then add a red colour to the bg
         boolean inaccurate = accuracy < SensorManager.SENSOR_STATUS_ACCURACY_HIGH;
@@ -86,8 +88,9 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
         // If the field has no strength, don't draw the needle
-        if (strength == 0)
+        if (strength == 0) {
             return;
+        }
         
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
@@ -100,10 +103,10 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
 
         // Draw the red half then the white half of the cone (rotated 180 deg)
         red(gl);
-        cone.draw(gl);
+        mCone.draw(gl);
         gl.glRotatef(180f, 0, 0, 1f);
         white(gl);
-        cone.draw(gl);
+        mCone.draw(gl);
     }
     
     /** Returns the value v clipped to lie within [min,max] */ 

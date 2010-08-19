@@ -6,32 +6,32 @@ import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 import com.adaptive_enterprises.android.compass3d.model.SettingsModel;
 
 public class VibrateLogicImpl implements VibrateLogic {
-    private double precision = 2; // degrees of precision to be aligned
-    private long holdTime = 200; // milliseconds to hold aligned
-    
+    private double mPrecision = 2; // degrees of precision to be aligned
+    private long mHoldTime = 200; // milliseconds to hold aligned
+    private State mState;
+    private long mAlignmentChronicTime;
+    private SettingsModel mSettings;
+
     enum State {
         UNALIGNED,
         ALIGNED_ACUTE,
         ALIGNED_CHRONIC
     }
-    private State state;
-    private long alignmentChronicTime;
-    private SettingsModel settings;
 
     public VibrateLogicImpl setSettings(SettingsModel settings) {
-        this.settings = settings;
+        mSettings = settings;
         return this;
     }
     
     @Override
     public void reset() {
-        state = State.UNALIGNED;
+        mState = State.UNALIGNED;
     }
     
     @Override
     public boolean shouldVibrate(CompassModel model, long time) {
         
-        if (!settings.getVibrateOnAlignment())
+        if (!mSettings.getVibrateOnAlignment())
             return false;
 
         double yaw, pitch;
@@ -42,28 +42,28 @@ public class VibrateLogicImpl implements VibrateLogic {
             yaw = model.getYaw();
             pitch = model.getPitch();
         }
-        boolean nowAligned = (Math.hypot(yaw, pitch) < precision);
         
+        boolean nowAligned = (Math.hypot(yaw, pitch) < mPrecision);
         boolean vibrate = false;
-        switch (state) {
+        switch (mState) {
         case UNALIGNED:
             if (nowAligned) {
-                state = State.ALIGNED_ACUTE;
-                alignmentChronicTime = time + holdTime;
+                mState = State.ALIGNED_ACUTE;
+                mAlignmentChronicTime = time + mHoldTime;
             }
             break;
         case ALIGNED_ACUTE:
             if (nowAligned) {
-                if (time >= alignmentChronicTime) {
-                    state = State.ALIGNED_CHRONIC;
+                if (time >= mAlignmentChronicTime) {
+                    mState = State.ALIGNED_CHRONIC;
                     vibrate = true;
                 } else
-                    state = State.UNALIGNED;
+                    mState = State.UNALIGNED;
             }
             break;
         case ALIGNED_CHRONIC:
             if (!nowAligned) {
-                state = State.UNALIGNED;
+                mState = State.UNALIGNED;
             }
             break;
         }

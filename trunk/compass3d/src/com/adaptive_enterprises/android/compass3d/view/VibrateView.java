@@ -14,32 +14,32 @@ import android.os.Vibrator;
  * direction of the magnetic field.
  */
 public class VibrateView implements Observer {
-    private CompassModel model;
-    private Vibrator vibrator;
-    private VibrateLogic vibrateLogic;
+    private CompassModel mCompass;
+    private Vibrator mVibrator;
+    private VibrateLogic mVibrateLogic;
 
     public VibrateView(Context context) {
-        vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        mVibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
     }
     
-    public void setModel(CompassModel model) {
-        if (this.model != null)
-            this.model.deleteObserver(this);
-        this.model = model;
-        if (model != null)
-            model.addObserver(this);
+    public void setModel(CompassModel compass) {
+        if (mCompass != null)
+            mCompass.deleteObserver(this);
+        mCompass = compass;
+        if (compass != null)
+            compass.addObserver(this);
     }
     
     public void setVibrateLogic(VibrateLogic vibrateLogic) {
-        this.vibrateLogic = vibrateLogic;
+        mVibrateLogic = vibrateLogic;
     }
     
     @Override
     public void update(Observable observable, Object data) {
-        if (vibrator != null
-                && vibrateLogic.shouldVibrate((CompassModel) observable,
+        if (mVibrator != null
+                && mVibrateLogic.shouldVibrate(mCompass,
                         System.currentTimeMillis()))
-            vibrator.vibrate(100);
+            mVibrator.vibrate(100);
     }
 
 }

@@ -28,63 +28,63 @@ import android.os.CountDownTimer;
  * The process is restarted whenever the application loses focus.
  */
 public class FakeCompassController implements CompassController {
-    private CompassModel compass;
-    private long startTime;
-    private CountDownTimer timer;
+    private CompassModel mCompass;
+    private long mStartTime;
+    private CountDownTimer mTimer;
     
     public void setCompass(CompassModel compass) {
-        this.compass = compass;
+        mCompass = compass;
     }
     
     void step() {
-        long time = System.currentTimeMillis() - startTime;
+        long time = System.currentTimeMillis() - mStartTime;
         double x, y, z;
         double r = 60; // reasonable strength
 
-        if (time % 10000 > 9800 ||
-            time % 10000 <  200)
+        if ((time % 10000) > 9800 || (time % 10000) < 200) {
             r = 120;
+        }
         
-        double s = Math.sin(time * Math.PI * 2 / 10000);
-        double c = Math.cos(time * Math.PI * 2 / 10000); 
+        double s = Math.sin(time * Math.PI * 2 / 10000) * r;
+        double c = Math.cos(time * Math.PI * 2 / 10000) * r; 
         if (time % 30000 < 10000) {
             // circle, counterclockwise starting at 3 o'clock
-            x = r * c;
-            y = r * s;
+            x = c;
+            y = s;
             z = 0;
         } else if (time % 30000 < 20000) {
             // inclining, starting at 12 o'clock first inclining
             x = 0; 
-            y = r * c;
-            z = r * s;
+            y = c;
+            z = s;
         } else {
             // inclining, starting at 3 o'clock first inclining
-            x = r * c; 
+            x = c; 
             y = 0;
-            z = r * s;
+            z = s;
         }
         
-        compass.setAccuracy(3);
-        compass.setTimestamp(time);
-        compass.setOrientation(new float[] {(float)x, (float)y, (float)z});
-        compass.notifyObservers();
+        mCompass.setAccuracy(3);
+        mCompass.setTimestamp(time);
+        mCompass.setOrientation(new float[] {(float)x, (float)y, (float)z});
+        mCompass.notifyObservers();
     }
     
     public void start() {
-        assert timer == null;
-        timer = new CountDownTimer(1000 * 60 * 60 * 24, 1000 / 15) {
+        assert mTimer == null;
+        mTimer = new CountDownTimer(1000 * 60 * 60 * 24, 1000 / 15) {
             public void onTick(long l) {
                 step();
             }
             public void onFinish() {
             }
         };
-        startTime = System.currentTimeMillis();
-        timer.start();
+        mStartTime = System.currentTimeMillis();
+        mTimer.start();
     }
     
     public void stop() {
-        timer.cancel();
-        timer = null;
+        mTimer.cancel();
+        mTimer = null;
     }
 }

@@ -1,13 +1,13 @@
 package com.adaptive_enterprises.android.compass3d.model;
 
 public class SettingsModel {
-    private boolean vibrateOnAlignment;
+    private boolean mVibrateOnAlignment;
     
     public boolean getVibrateOnAlignment() {
-        return vibrateOnAlignment;
+        return mVibrateOnAlignment;
     }
     
     public void setVibrateOnAlignment(boolean vibrateOnAlignment) {
-        this.vibrateOnAlignment = vibrateOnAlignment;
+        mVibrateOnAlignment = vibrateOnAlignment;
     }
 }
