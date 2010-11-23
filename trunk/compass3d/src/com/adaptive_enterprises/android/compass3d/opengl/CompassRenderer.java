@@ -10,7 +10,7 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 
 /**
- * OpenGL renderer that draws a cone with orientation based on a CompassModel.
+ * OpenGL renderer that draws a cone with orientation based on a {@link CompassModel}.
  */
 public class CompassRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "Compass3D";
@@ -36,14 +36,18 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
         gl.glClearColor(0.2f, 0.2f, 0.2f, 1f);
         gl.glEnable(GL10.GL_CULL_FACE);
+
+        // Ambient lighting with a key light from the top
         gl.glEnable(GL10.GL_LIGHTING);
         gl.glEnable(GL10.GL_LIGHT0);
-        gl.glEnable(GL10.GL_COLOR_MATERIAL);
-        gl.glMaterialf(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, 64f);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, Cone.asBuffer(new float[] {
                 0, 30, 10, 0/*unidirectional*/}));
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, Cone.asBuffer(new float[] {
                 0.5f, 0.5f, 0.5f, 1f}));
+
+        // Add shininess
+        gl.glEnable(GL10.GL_COLOR_MATERIAL);
+        gl.glMaterialf(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, 64f);
     }
 
     @Override
@@ -53,8 +57,6 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
         float aspect = (float)w / h;
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
-        //gl.glFrustumf(-aspect, aspect, -1, 1, 1, 10);
-        //gl.glOrthof(-aspect, aspect, -1, 1, 1, 10);
         float scale = 2f;
         gl.glOrthof(-scale, scale, -scale/aspect, scale/aspect, 1, 10);
     }
@@ -65,6 +67,7 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
             return;
         }
 
+        // copy out the current orientation; avoid locking it for too long
         float strength;
         double yaw, pitch;
         int accuracy;
@@ -76,11 +79,12 @@ public class CompassRenderer implements GLSurfaceView.Renderer {
         }
 
         // Don't draw the needle if the value is unreliable
-        if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
-            return;
-        }
+        //if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
+        //    return;
+        //}
         
         // If the sensor is inaccurate, then add a red colour to the bg
+        // TODO make the needle translucent on low accuracy?
         boolean inaccurate = accuracy < SensorManager.SENSOR_STATUS_ACCURACY_HIGH;
         // Lighten the background if the field strength is strong.
         float bg = clip(strength / 250f, 0, 1f);

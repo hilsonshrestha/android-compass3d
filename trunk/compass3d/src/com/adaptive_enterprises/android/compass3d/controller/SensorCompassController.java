@@ -10,7 +10,8 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 /**
- * Receives updates from a hardware compass and updates a CompassModel.
+ * Arranges to receive updates from a hardware compass sensor 
+ * and updates a {@link CompassModel}.
  */
 public class SensorCompassController implements CompassController {
     private static final String TAG = "Compass3D";
@@ -25,6 +26,7 @@ public class SensorCompassController implements CompassController {
         stop();
         mSensorEventListener = compass == null ? null : new SensorEventListener() {
             public void onSensorChanged(SensorEvent sensorevent) {
+                // update the model using the last received sensor readings
                 synchronized (compass) {
                     compass.setOrientation(sensorevent.values);
                     compass.setAccuracy(sensorevent.accuracy);
@@ -33,7 +35,9 @@ public class SensorCompassController implements CompassController {
                 compass.notifyObservers();
             }
             public void onAccuracyChanged(Sensor sensor, int newAccuracy) {
-                // ignore;
+                // this can happen when the compass detects a very strong field!
+                // ignore
+                Log.d(TAG, "sensor.accuracy: " + newAccuracy + " (ignored)");
             }
         };
         if (wasRegistered)

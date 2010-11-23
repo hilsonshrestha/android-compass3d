@@ -10,10 +10,11 @@ import android.content.Context;
 import android.os.Vibrator;
 
 /** 
- * Vibrates the phone when it is exactly oriented in the
- * direction of the magnetic field.
+ * A view that activates the phone's hardware vibrator according to
+ * the {@link VibrateLogic}.
  */
 public class VibrateView implements Observer {
+    private static final int SHORT_INTERVAL = 100; // msec
     private CompassModel mCompass;
     private Vibrator mVibrator;
     private VibrateLogic mVibrateLogic;
@@ -39,7 +40,7 @@ public class VibrateView implements Observer {
         if (mVibrator != null
                 && mVibrateLogic.shouldVibrate(mCompass,
                         System.currentTimeMillis()))
-            mVibrator.vibrate(100);
+            mVibrator.vibrate(SHORT_INTERVAL);
     }
 
 }

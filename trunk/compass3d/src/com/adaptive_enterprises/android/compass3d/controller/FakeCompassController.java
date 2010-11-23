@@ -7,25 +7,26 @@ import android.os.CountDownTimer;
 /**
  * A fake compass controller that rotates the apparent magnetic field in a known
  * way. The field rotates about the three axes. Imagine the phone is lying flat
- * on a table. The top of the phone is away from you.
+ * on a table, the top of the phone away from you.
  * <p>
- * First the field starts to the right side of the phone (3 o'clock) and moves
+ * First the field starts pointing at the right side of the phone (3 o'clock) and moves
  * around the plane of the display, to the top edge (12 o'clock), then the left
  * edge (9 o'clock), then the bottom edge (6 o'clock) and then to the right edge again.
  * <p>
  * Then the intensity peaks for a moment (causing the display to flash) for the
  * next part. The field starts at the top of the phone (12 o'clock), then rises up
- * to be directly above the display, then comes down to the bottom of the phone (6 o'clock)
- * then continues to go down and diretcly under the phone, then finally back to the
+ * to point directly above the display, then comes down to the bottom of the phone (6 o'clock)
+ * then continues to go down and directly under the phone, then finally back to the
  * top (12 o'clock).
  * <p>
- * Finally (after another intensity flash), the field starts at 3 o'clock, rises
+ * Finally, after another intensity flash, the field starts at 3 o'clock, rises
  * to be above the phone, then sinks to be at 9 o'clock, then sinks further to
  * end up under the phone, until finally it returns to the 3 o'clock position.
  * <p>
  * After this, the whole process repeats.
  * <p>
- * The process is restarted whenever the application loses focus.
+ * The process is restarted whenever the start() is called (usually when the 
+ * activity gains focus.)
  */
 public class FakeCompassController implements CompassController {
     private CompassModel mCompass;

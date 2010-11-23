@@ -9,7 +9,8 @@ import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 import android.widget.TextView;
 
 /**
- * Observes a compass model and updates a text view
+ * An adaptor between a {@link CompassModel} and a {@link TextView}.
+ * Waits for compass changes, then updates the text view.
  */
 public class CompassTextViewAdapter implements Observer {
     private CompassModel mCompass;
