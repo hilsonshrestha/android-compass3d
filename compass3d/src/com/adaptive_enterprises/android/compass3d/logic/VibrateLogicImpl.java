@@ -53,12 +53,11 @@ public class VibrateLogicImpl implements VibrateLogic {
             }
             break;
         case ALIGNED_ACUTE:
-            if (nowAligned) {
-                if (time >= mAlignmentChronicTime) {
-                    mState = State.ALIGNED_CHRONIC;
-                    vibrate = true;
-                } else
-                    mState = State.UNALIGNED;
+            if (nowAligned && time >= mAlignmentChronicTime) {
+                mState = State.ALIGNED_CHRONIC;
+                vibrate = true;
+            } else if (!nowAligned) {
+                mState = State.UNALIGNED;
             }
             break;
         case ALIGNED_CHRONIC:

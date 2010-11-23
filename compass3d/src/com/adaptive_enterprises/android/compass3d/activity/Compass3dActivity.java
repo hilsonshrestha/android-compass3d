@@ -9,13 +9,13 @@ import com.adaptive_enterprises.android.compass3d.logic.VibrateLogicImpl;
 import com.adaptive_enterprises.android.compass3d.model.CompassModel;
 import com.adaptive_enterprises.android.compass3d.model.SettingsModel;
 import com.adaptive_enterprises.android.compass3d.opengl.CompassRenderer;
-import com.adaptive_enterprises.android.compass3d.view.CompassSurfaceView;
 import com.adaptive_enterprises.android.compass3d.view.CompassTextViewAdapter;
 import com.adaptive_enterprises.android.compass3d.view.VibrateView;
 import com.adaptive_enterprises.android.compass3d.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +29,7 @@ public class Compass3dActivity extends Activity {
     private final SettingsModel mSettings = new SettingsModel();
     private CompassController mCompassController;
     private CompassTextViewAdapter mCompassTextAdapter;
-    private CompassSurfaceView mSurfaceView;
+    private GLSurfaceView mSurfaceView;
     private VibrateLogic mVibrateLogic;
     
     /** Called when the activity is first created. */
@@ -43,7 +43,7 @@ public class Compass3dActivity extends Activity {
         mCompassTextAdapter.setTextView((TextView)findViewById(R.id.TextView01));
         mCompassTextAdapter.setCompass(mCompass);
 
-        mSurfaceView = (CompassSurfaceView)findViewById(R.id.SurfaceView01);
+        mSurfaceView = (GLSurfaceView)findViewById(R.id.SurfaceView01);
         mSurfaceView.setRenderer(new CompassRenderer().setModel(mCompass));
 
         mCompassController = new SensorCompassController(getApplicationContext());

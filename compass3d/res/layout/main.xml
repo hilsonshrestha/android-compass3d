@@ -16,7 +16,7 @@
                 android:layout_marginLeft="5px" 
                 android:typeface="monospace" />
   </TableRow>
-  <com.adaptive_enterprises.android.compass3d.view.CompassSurfaceView
+  <android.opengl.GLSurfaceView
                android:id="@+id/SurfaceView01" 
                android:layout_width="fill_parent"
                android:layout_height="fill_parent" />
